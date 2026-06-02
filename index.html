@@ -366,12 +366,29 @@ a {
 /* كود ضبط الشاشات الصغيرة والموبايل */
 @media (max-width: 768px) {
     /* يمنع الصور وسماعة الرأس من الخروج بره الشاشة ويجعلها تصغر تلقائياً */
-    img {
-        max-width: 100% !important;
-        height: auto !important;
-        display: block !important;
-        margin: 20px auto !important;
-    }
+  /* الكود ده مخصص للصورة الكبيرة فقط عشان تظبط مقاسها */
+  .image-display-area img {
+            max-width: 100% !important;
+            height: auto !important;
+            display: block !important;
+            margin: 0 auto !important;
+        }
+
+        /* الكود ده مخصوص للـ 4 صور الصغيرة عشان تنور وتظهر جمب بعض */
+        .control-tabs {
+            display: flex !important;
+            flex-direction: row !important; /* يخليهم جمب بعض مش تحت بعض */
+            justify-content: center !important;
+            gap: 10px !important;
+            margin-top: 20px !important;
+        }
+
+        .control-tabs img {
+            width: 40px !important; /* حجم مناسب للصور الصغيرة على الموبايل */
+            height: 40px !important;
+            opacity: 1 !important; /* نضمن إنها مش ميتة أو مظلمة */
+            object-fit: contain !important;
+        }
 }
 
     </style>
