@@ -105,7 +105,7 @@
         .shop-now-btn {
             display: inline-block;
             background-color: #ffffff;
-            color: #120914;
+            color: #000000 !important;
             font-weight: bold;
             padding: 14px 35px;
             border-radius: 50px;
@@ -119,7 +119,7 @@
 
         .shop-now-btn:hover {
             background-color: transparent;
-            color: #ffffff;
+            color: #ffffff !important;
             border-color: #ffffff;
             transform: scale(1.05);
         }
@@ -158,6 +158,10 @@
             justify-content: center;
             position: relative;
             height: 480px; /* تثبيت الارتفاع لضمان ثبات الأبعاد أثناء الحركة */
+        }
+
+        .image-display-area img {
+         z-index: 10;
         }
 
         /* حاوية تأثير الانعكاس والأنيميشن */
