@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuvora Headphones</title>
+    <style>
+        /* إعدادات عامة وتصفير الهوامش */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* المتغير البرمجي يبدأ باللون الأسود الداكن */
+        :root {
+            --neon-color: #08040a; 
+        }
+
+        body {
+            background: radial-gradient(circle at center, var(--neon-color) 0%, #0d060e 60%, #050206 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            direction: ltr;
+            transition: background 0.6s ease-in-out; 
+            overflow-x: hidden;
+        }
+
+        /* ==================== شريط التنقل العلوي (Navbar) ==================== */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 50px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1); 
+            transform: translateY(-2px);
+        }
+
+        /* ==================== القسم الرئيسي الأول (Hero Section) ==================== */
+        .hero-container {
+            display: flex;
+            max-width: 1300px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 50px 80px 50px;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .content-area {
+            flex: 1;
+            max-width: 550px;
+        }
+
+        .content-area h1 {
+            font-size: 55px;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .content-area p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .shop-now-btn {
+            display: inline-block;
+            background-color: #ffffff;
+            color: #120914;
+            font-weight: bold;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            margin-bottom: 40px;
+        }
+
+        .shop-now-btn:hover {
+            background-color: transparent;
+            color: #ffffff;
+            border-color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        /* الصور المصغرة بالأسفل - مع خاصية طرد الخلفية البيضاء */
+        .thumbnails {
+            display: flex;
+            gap: 15px;
+        }
+
+        .thumbnails img {
+            width: 65px;
+            height: 65px;
+            background-color: #ffffff; /* لجعل خاصية الميكس تعمل بشكل مثالي داخل الكارت */
+            mix-blend-mode: multiply; /* تطير الخلفية البيضاء للصورة */
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 4px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            object-fit: contain;
+        }
+
+        .thumbnails img:hover {
+            transform: translateY(-5px) scale(1.05);
+            border-color: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        /* الجزء الأيمن المتوازن لعرض السماعة الكبيرة */
+        .image-display-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            height: 480px; /* تثبيت الارتفاع لضمان ثبات الأبعاد أثناء الحركة */
+        }
+
+        /* حاوية تأثير الانعكاس والأنيميشن */
+        .reflection-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* نعومة حركة خروج ودخول الحاوية بالكامل */
+        }
+
+        /* الحالات الخاصة بالأنيميشن (الخروج والظهور) */
+        .slide-out {
+            transform: translate(100px, 150px) scale(0.6); /* تنزل تحت يمين وتصغر */
+            opacity: 0;
+        }
+
+        .slide-in {
+            transform: translate(0, 100px) scale(0.8); /* تبدأ من تحت شوية وصغيرة */
+            opacity: 0;
+            transition: none; /* الغاء الترانزيشن مؤقتاً للتهيئة */
+        }
+
+        .main-headphone {
+            max-width: 350px;
+            width: 100%;
+            height: 330px;
+            object-fit: contain;
+            mix-blend-mode: multiply; /* تطير الخلفية البيضاء للسماعة الكبيرة */
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.7));
+        }
+
+        /* خط نيون أنيق يتأثر بقوة الإضاءة */
+        .divider-line {
+            width: 70%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        /* حاوية تأثير الانعكاس المرآتي */
+        .reflected-frame {
+            -webkit-box-reflect: below 2px linear-gradient(transparent 55%, rgba(255, 255, 255, 0.2));
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .reflected-image {
+            max-width: 350px;
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            transform: scaleY(-1); 
+            opacity: 0.15; 
+            filter: blur(2px); 
+            mix-blend-mode: multiply; /* تطير الخلفية البيضاء للانعكاس أيضاً */
+        }
+
+        /* ==================== باقي أقسام الموقع ==================== */
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            max-width: 1200px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 50px;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .features-section {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto 80px auto;
+            padding: 0 50px;
+            display: flex;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .feature-card {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.04); 
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 30px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .feature-card p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .specs-section {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto 80px auto;
+            padding: 0 50px;
+        }
+
+        .specs-table {
+            width: 100%;
+            max-width: 600px;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .specs-table td {
+            padding: 15px 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 16px;
+        }
+
+        .specs-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .specs-label {
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.5);
+            width: 40%;
+        }
+
+        .reviews-section {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto 80px auto;
+            padding: 0 50px;
+        }
+
+        .rating-box {
+            background-color: rgba(255, 255, 255, 0.04);
+            padding: 25px;
+            border-radius: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 18px;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .rating-stars {
+            color: #ffbb00;
+            font-size: 22px;
+        }
+
+        .contact-section {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto 60px auto;
+            padding: 0 50px;
+        }
+
+        .contact-info {
+            font-size: 16px;
+            line-height: 2;
+        }
+
+        .contact-info a {
+            color: #ffffff;
+            text-decoration: none;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 25px 50px;
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: auto;
+        }
+
+            /* تنسيق الروابط لكي تحافظ على اللون الأبيض وبدون خط تحتها */
+a {
+    color: #fff !important; 
+    text-decoration: none !important;
+}
+
+/* كود ضبط الشاشات الصغيرة والموبايل */
+@media (max-width: 768px) {
+    /* يمنع الصور وسماعة الرأس من الخروج بره الشاشة ويجعلها تصغر تلقائياً */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+        display: block !important;
+        margin: 20px auto !important;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">NUVORA</div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#specs">Specifications</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero-container">
+        <div class="content-area">
+            <h1>Wireless<br>Headphones</h1>
+            <p>Premium sound experience with modern design and deep bass. Discover the new generation of smart audio comfort devices designed for your daily routine.</p>
+            
+            <a href="#features" class="shop-now-btn">Shop Now</a>
+            
+            <!-- ألوان النيون المضيئة القوية تم تعديلها هنا برمز الهكس القوي المشع -->
+            <div class="thumbnails">
+                <img src="headphone1.png" alt="Headphone 1" onclick="animateAndChange('headphone1.png', '#1a0d22')">
+                <img src="headphone2.png" alt="Headphone 2" onclick="animateAndChange('headphone2.png', '#5a0a0a')">
+                <img src="headphone3.png" alt="Headphone 3" onclick="animateAndChange('headphone3.png', '#2d3139')">
+                <img src="headphone4.png" alt="Headphone 4" onclick="animateAndChange('headphone4.png', '#6b114d')">
+            </div>
+        </div>
+
+        <!-- منطقة عرض السماعة الكبيرة المدعومة بالأنيميشن الشفاف -->
+        <div class="image-display-area">
+            <div id="glowContainer" class="reflection-container">
+                <div class="reflected-frame">
+                    <img id="mainImg" src="headphone1.png" class="main-headphone" alt="Nuvora Main Display">
+                </div>
+                <div class="divider-line"></div>
+                <img id="reflectImg" src="headphone1.png" class="reflected-image" alt="Reflection">
+            </div>
+        </div>
+    </section>
+
+    <!-- باقي الأقسام كما هي فُل الفُل -->
+    <h2 class="section-title" id="features">Features</h2>
+    <section class="features-section">
+        <div class="feature-card">
+            <h3>Noise Canceling</h3>
+            <p>Crystal clear sound.</p>
+        </div>
+        <div class="feature-card">
+            <h3>40 Hours Battery</h3>
+            <p>Long listening sessions.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Bluetooth 5.3</h3>
+            <p>Fast stable connection.</p>
+        </div>
+    </section>
+
+    <h2 class="section-title" id="specs">Specifications</h2>
+    <section class="specs-section">
+        <table class="specs-table">
+            <tr><td class="specs-label">Driver</td><td>40mm</td></tr>
+            <tr><td class="specs-label">Battery</td><td>40 Hours</td></tr>
+            <tr><td class="specs-label">Bluetooth</td><td>5.3</td></tr>
+            <tr><td class="specs-label">Charging</td><td>USB-C</td></tr>
+            <tr><td class="specs-label">Weight</td><td>240g</td></tr>
+        </table>
+    </section>
+
+    <h2 class="section-title" id="reviews">Customer Reviews</h2>
+    <section class="reviews-section">
+        <div class="rating-box">
+            <span class="rating-stars">★★★★★</span>
+            <span>4.9 / 5 Average Rating</span>
+        </div>
+    </section>
+
+    <h2 class="section-title" id="contact">Contact</h2>
+    <section class="contact-section">
+        <div class="contact-info">
+            <p>Email: <a href="mailto:abanoubkaram752@gmail.com">abanoubkaram752@gmail.com</a></p>
+            <p>WhatsApp: <a href="https://wa.me/01204572680" target="_blank">01204572680</a></p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Nuvora. All Rights Reserved.</p>
+    </footer>
+
+    <!-- جافا سكريبت المطور بالأنيميشن الجديد وحل مشكلة قوة اللون -->
+    <script>
+        function animateAndChange(imagePath, neonColor) {
+            const container = document.getElementById('glowContainer');
+            const mainImg = document.getElementById('mainImg');
+            const reflectImg = document.getElementById('reflectImg');
+
+            // لو ضغط على نفس الصورة المفتوحة حالياً لا يفعل شيء لعدم تكرار الأنيميشن
+            if(mainImg.getAttribute('src') === imagePath) return;
+
+            // 1. تفعيل حركة الاختفاء والنزول تحت يمين
+            container.classList.add('slide-out');
+
+            // 2. انتظر حتى ينتهي تأثير الاختفاء (500 مللي ثانية) ثم غير الصورة وهي مخفية
+            setTimeout(() => {
+                mainImg.src = imagePath;
+                reflectImg.src = imagePath;
+                
+                // تحديث اللون الخلفي فوراً وزيادة توهجه
+                document.documentElement.style.setProperty('--neon-color', neonColor);
+
+                // تهيئة الحاوية لتأتي من الأسفل (مخفية ومن أسفل)
+                container.classList.remove('slide-out');
+                container.classList.add('slide-in');
+
+                // خفض الأوباسيتي والبدء فوراً في الصعود لأعلى برفق
+                setTimeout(() => {
+                    container.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'; /* تأثير مطاطي احترافي عند الاستقرار */
+                    container.classList.remove('slide-in');
+                }, 50);
+
+            }, 450);
+            
+            // إعادة ضبط الترانزيشن الافتراضي للحاوية بعد انتهاء الدخول
+            setTimeout(() => {
+                container.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+            }, 1100);
+        }
+    </script>
+
+</body>
+</html>
