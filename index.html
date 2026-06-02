@@ -375,22 +375,37 @@ a {
         }
 
         /* الكود ده مخصوص للـ 4 صور الصغيرة عشان تنور وتظهر جمب بعض */
-        .control-tabs {
+        .thumbnails {
             display: flex !important;
             flex-direction: row !important; /* يخليهم جمب بعض مش تحت بعض */
             justify-content: center !important;
-            gap: 10px !important;
+            align-items: center !important;
+            gap: 30px !important;
             margin-top: 20px !important;
+
+            background-color: #ffffff !important;
+            padding: 8px 16px !important;
+            border-radius: 20px !important;
+            margin:20px auto !important;
+            width: max-content !important;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2) !important;
         }
 
-        .control-tabs img {
-            width: 40px !important; /* حجم مناسب للصور الصغيرة على الموبايل */
-            height: 40px !important;
+        .thumbnails img {
+            width: 37px !important; /* حجم مناسب للصور الصغيرة على الموبايل */
+            height: 37px !important;
             opacity: 1 !important; /* نضمن إنها مش ميتة أو مظلمة */
+            filter: none !important;
+            display: block !important;
             object-fit: contain !important;
+          }
+        .image-display-area img{
+            max-width: 100% !important;
+            height: auto !important;
+            display: block !important;
+            margin: 0 auto !important;
         }
-}
-
+        }
     </style>
 </head>
 <body>
@@ -417,7 +432,7 @@ a {
             
             <!-- ألوان النيون المضيئة القوية تم تعديلها هنا برمز الهكس القوي المشع -->
             <div class="thumbnails">
-                <img src="headphone1.png" alt="Headphone 1" onclick="animateAndChange('headphone1.png', '#1a0d22')">
+                <img src="Https://raw.githubusercontent.com/abanoukaram/nuvora.github.io/main/headphone1.png" alt="Headphone 1" onclick="animateAndChange('headphone1.png', '#1a0d22')">
                 <img src="headphone2.png" alt="Headphone 2" onclick="animateAndChange('headphone2.png', '#5a0a0a')">
                 <img src="headphone3.png" alt="Headphone 3" onclick="animateAndChange('headphone3.png', '#2d3139')">
                 <img src="headphone4.png" alt="Headphone 4" onclick="animateAndChange('headphone4.png', '#6b114d')">
@@ -428,10 +443,10 @@ a {
         <div class="image-display-area">
             <div id="glowContainer" class="reflection-container">
                 <div class="reflected-frame">
-                    <img id="mainImg" src="headphone1.png" class="main-headphone" alt="Nuvora Main Display">
+                    <img id="mainImg" src="Https://raw.githubusercontent.com/abanoukaram/nuvora.github.io/main/headphone1.png" class="main-headphone" alt="Nuvora Main Display">
                 </div>
                 <div class="divider-line"></div>
-                <img id="reflectImg" src="headphone1.png" class="reflected-image" alt="Reflection">
+                <img id="reflectImg" src="Https://raw.githubusercontent.com/abanoukaram/nuvora.github.io/main/headphone1.png" class="reflected-image" alt="Reflection">
             </div>
         </div>
     </section>
