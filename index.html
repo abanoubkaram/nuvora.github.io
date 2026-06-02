@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuvora Headphones</title>
     <style>
-        /* إعدادات عامة وتصفير الهوامش */
+        /* تصفير الهوامش وإعدادات الخطوط */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -18,40 +18,45 @@
         }
 
         :root {
-            --neon-color: #08040a; 
+            --neon-color: #1a0d22; 
         }
 
         body {
-            background: radial-gradient(circle at center, var(--neon-color) 0%, #0d060e 60%, #050206 100%);
+            background: radial-gradient(circle at center, var(--neon-color) 0%, #0d060e 70%, #050206 100%);
             color: #ffffff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             direction: ltr;
-            transition: background 0.6s ease-in-out; 
             overflow-x: hidden;
+            transition: background 0.6s ease-in-out;
         }
 
-        /* ==================== شريط التنقل العلوي (Navbar) ==================== */
+        /* ==================== شريط التنقل المتجاوب (Navbar) ==================== */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 25px 50px;
+            padding: 20px 5%;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .logo {
             font-size: 24px;
             font-weight: bold;
             letter-spacing: 2px;
-            color: #ffffff;
             text-transform: uppercase;
         }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 15px;
+            gap: 20px;
+            flex-wrap: wrap; /* تمنع الكلمات من الاندماج أو الخروج عن الشاشة */
         }
 
         nav ul li a {
@@ -59,52 +64,51 @@
             text-decoration: none;
             font-size: 15px;
             font-weight: 500;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 30px;
             transition: all 0.3s ease;
-            display: inline-block;
         }
 
         nav ul li a:hover {
-            background-color: rgba(255, 255, 255, 0.1); 
-            transform: translateY(-2px);
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
-        /* ==================== القسم الرئيسي الأول (Hero Section) ==================== */
+        /* ==================== القسم الرئيسي (Hero Section) ==================== */
         .hero-container {
             display: flex;
-            max-width: 1300px;
+            max-width: 1200px;
             width: 100%;
             margin: 0 auto;
-            padding: 40px 50px 80px 50px;
-            justify-content: space-between;
+            padding: 60px 5%;
             align-items: center;
+            justify-content: space-between;
             gap: 40px;
+            flex: 1;
         }
 
         .content-area {
             flex: 1;
-            max-width: 550px;
+            min-width: 300px;
         }
 
         .content-area h1 {
-            font-size: 55px;
-            line-height: 1.1;
-            margin-bottom: 15px;
-            font-weight: 700;
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            font-weight: 800;
         }
 
         .content-area p {
             font-size: 16px;
             color: rgba(255, 255, 255, 0.75);
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             line-height: 1.6;
         }
 
         .shop-now-btn {
             display: inline-block;
             background-color: #ffffff;
-            color: #000000 !important;
+            color: #000000;
             font-weight: bold;
             padding: 14px 35px;
             border-radius: 50px;
@@ -112,59 +116,53 @@
             font-size: 16px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
-            border: 2px solid transparent;
             margin-bottom: 40px;
         }
 
         .shop-now-btn:hover {
             background-color: transparent;
-            color: #ffffff !important;
-            border-color: #ffffff;
+            color: #ffffff;
+            border: 2px solid #ffffff;
             transform: scale(1.05);
         }
 
-        /* الصور المصغرة بالأسفل - تم جعل خلفيتها شفافة تماماً */
+        /* الصور المصغرة بالأسفل */
         .thumbnails {
             display: flex;
             gap: 15px;
+            flex-wrap: wrap;
         }
 
         .thumbnails img {
             width: 65px;
             height: 65px;
-            background-color: transparent; /* خلفية شفافة */
+            background-color: rgba(255, 255, 255, 0.05);
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 12px;
-            padding: 4px;
+            padding: 6px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             object-fit: contain;
         }
 
         .thumbnails img:hover {
-            transform: translateY(-5px) scale(1.05);
+            transform: translateY(-5px);
             border-color: #ffffff;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
-        /* الجزء الأيمن المتوازن لعرض السماعة الكبيرة */
+        /* منطقة عرض السماعة الكبيرة */
         .image-display-area {
             flex: 1;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            position: relative;
-            height: 480px; 
+            align-items: center;
+            min-width: 300px;
         }
 
-        .image-display-area img {
-            z-index: 10;
-        }
-
-        /* حاوية تأثير الانعكاس والأنيميشن */
         .reflection-container {
             width: 100%;
+            max-width: 400px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -172,78 +170,61 @@
         }
 
         .slide-out {
-            transform: translate(100px, 150px) scale(0.6); 
+            transform: scale(0.8) translateY(50px);
             opacity: 0;
-            transition: transform 0.4s ease-in, opacity 0.4s ease-in; 
         }
 
         .slide-in {
-            transform: translate(0, 100px) scale(0.8); 
+            transform: scale(1.1);
             opacity: 0;
-            transition: none !important; 
+            transition: none !important;
         }
 
         .main-headphone {
-            max-width: 350px;
             width: 100%;
-            height: 330px;
+            max-height: 380px;
             object-fit: contain;
-            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.7)); /* تم حذف الـ multiply */
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.6));
         }
 
-        /* خط نيون أنيق يتأثر بقوة الإضاءة */
         .divider-line {
-            width: 70%;
+            width: 80%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-            margin-top: 15px;
-            margin-bottom: 5px;
-        }
-
-        /* حاوية تأثير الانعكاس المرآتي */
-        .reflected-frame {
-            -webkit-box-reflect: below 2px linear-gradient(transparent 55%, rgba(255, 255, 255, 0.2));
-            display: flex;
-            justify-content: center;
-            width: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            margin: 20px 0 10px 0;
         }
 
         .reflected-image {
-            max-width: 350px;
             width: 100%;
-            height: 120px;
+            max-height: 130px;
             object-fit: contain;
-            transform: scaleY(-1); 
-            opacity: 0.15; 
-            filter: blur(2px); /* تم حذف الـ multiply */
+            transform: scaleY(-1);
+            opacity: 0.15;
+            filter: blur(3px);
         }
 
-        /* ==================== باقي أقسام الموقع ==================== */
+        /* ==================== الأقسام العامة الثابتة ==================== */
         .section-title {
-            font-size: 32px;
+            font-size: 2rem;
             font-weight: 700;
-            margin-bottom: 30px;
+            margin: 60px auto 30px auto;
+            padding: 0 5%;
             max-width: 1200px;
             width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 0 50px;
-            color: rgba(255, 255, 255, 0.95);
         }
 
         .features-section {
             max-width: 1200px;
             width: 100%;
-            margin: 0 auto 80px auto;
-            padding: 0 50px;
-            display: flex;
-            justify-content: space-between;
+            margin: 0 auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 25px;
         }
 
         .feature-card {
-            flex: 1;
-            background-color: rgba(255, 255, 255, 0.04); 
+            background-color: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 30px;
             border-radius: 20px;
@@ -251,72 +232,63 @@
         }
 
         .feature-card:hover {
-            background-color: rgba(255, 255, 255, 0.08);
+            background-color: rgba(255, 255, 255, 0.06);
             transform: translateY(-5px);
         }
 
         .feature-card h3 {
             font-size: 20px;
             margin-bottom: 10px;
-            font-weight: 600;
-            color: #ffffff;
         }
 
         .feature-card p {
             font-size: 15px;
-            color: rgba(255, 255, 255, 0.65);
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .specs-section {
             max-width: 1200px;
             width: 100%;
-            margin: 0 auto 80px auto;
-            padding: 0 50px;
+            margin: 0 auto;
+            padding: 0 5%;
         }
 
         .specs-table {
             width: 100%;
             max-width: 600px;
             border-collapse: collapse;
-            background-color: rgba(255, 255, 255, 0.03);
+            background-color: rgba(255, 255, 255, 0.02);
             border-radius: 15px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .specs-table td {
-            padding: 15px 25px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            font-size: 16px;
-        }
-
-        .specs-table tr:last-child td {
-            border-bottom: none;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .specs-label {
             font-weight: bold;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.4);
             width: 40%;
         }
 
-        .reviews-section {
+        .reviews-section, .contact-section {
             max-width: 1200px;
             width: 100%;
-            margin: 0 auto 80px auto;
-            padding: 0 50px;
+            margin: 0 auto;
+            padding: 0 5%;
         }
 
         .rating-box {
-            background-color: rgba(255, 255, 255, 0.04);
-            padding: 25px;
+            background-color: rgba(255, 255, 255, 0.03);
+            padding: 20px 30px;
             border-radius: 15px;
             display: inline-flex;
             align-items: center;
             gap: 15px;
-            font-size: 18px;
-            font-weight: 500;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .rating-stars {
@@ -324,79 +296,54 @@
             font-size: 22px;
         }
 
-        .contact-section {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto 60px auto;
-            padding: 0 50px;
-        }
-
-        .contact-info {
+        .contact-info p {
             font-size: 16px;
             line-height: 2;
         }
 
         .contact-info a {
             color: #ffffff;
-            text-decoration: none;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
-            transition: all 0.3s;
+            text-decoration: underline;
         }
 
         footer {
             background-color: rgba(0, 0, 0, 0.4);
-            padding: 25px 50px;
+            padding: 30px;
             text-align: center;
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 80px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-            margin-top: auto;
         }
 
-        /* تنسيق الروابط لكي تحافظ على اللون الأبيض وبدون خط تحتها */
-        a {
-            color: #fff !important; 
-            text-decoration: none !important;
-        }
+        /* ==================== شاشات الموبايل والتابلت المتجاوبة (Responsive Queries) ==================== */
+        @media (max-width: 900px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
 
-        /* كود ضبط الشاشات الصغيرة والموبايل */
-        @media (max-width: 768px) {
-            .image-display-area img {
-                max-width: 100% !important;
-                height: auto !important;
-                display: block !important;
-                margin: 0 auto !important;
+            .hero-container {
+                flex-direction: column-reverse; /* يخلي السماعة تظهر فوق الكلام بشكل شيك في الموبايل */
+                text-align: center;
+                padding-top: 30px;
+            }
+
+            .content-area h1 {
+                font-size: 2.5rem;
             }
 
             .thumbnails {
-                display: flex !important;
-                flex-direction: row !important; 
-                justify-content: center !important;
-                align-items: center !important;
-                gap: 30px !important;
-                margin-top: 20px !important;
-                background-color: rgba(255, 255, 255, 0.05) !important; /* خلفية داكنة خفيفة تناسب الموبايل */
-                padding: 8px 16px !important;
-                border-radius: 20px !important;
-                margin: 20px auto !important;
-                width: max-content !important;
-                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2) !important;
+                justify-content: center;
             }
 
-            .thumbnails img {
-                width: 37px !important; 
-                height: 37px !important;
-                opacity: 1 !important; 
-                filter: none !important;
-                display: block !important;
-                object-fit: contain !important;
+            .image-display-area {
+                width: 100%;
             }
-            
-            .image-display-area img {
-                max-width: 100% !important;
-                height: auto !important;
-                display: block !important;
-                margin: 0 auto !important;
+
+            .main-headphone {
+                max-height: 280px;
             }
         }
     </style>
@@ -425,17 +372,15 @@
             
             <div class="thumbnails">
                 <img src="headphone1.png" alt="Headphone 1" onclick="animateAndChange('headphone1.png', '#1a0d22')">
-                <img src="headphone2.png" alt="Headphone 2" onclick="animateAndChange('headphone2.png', '#5a0a0a')">
-                <img src="headphone3.png" alt="Headphone 3" onclick="animateAndChange('headphone3.png', '#2d3139')">
-                <img src="headphone4.png" alt="Headphone 4" onclick="animateAndChange('headphone4.png', '#6b114d')">
+                <img src="headphone2.png" alt="Headphone 2" onclick="animateAndChange('headphone2.png', '#4a0e17')">
+                <img src="headphone3.png" alt="Headphone 3" onclick="animateAndChange('headphone3.png', '#1b262c')">
+                <img src="headphone4.png" alt="Headphone 4" onclick="animateAndChange('headphone4.png', '#4d0b3b')">
             </div>
         </div>
 
         <div class="image-display-area">
             <div id="glowContainer" class="reflection-container">
-                <div class="reflected-frame">
-                    <img id="mainImg" src="headphone1.png" class="main-headphone" alt="Nuvora Main Display">
-                </div>
+                <img id="mainImg" src="headphone1.png" class="main-headphone" alt="Nuvora Main Display">
                 <div class="divider-line"></div>
                 <img id="reflectImg" src="headphone1.png" class="reflected-image" alt="Reflection">
             </div>
@@ -446,26 +391,26 @@
     <section class="features-section">
         <div class="feature-card">
             <h3>Noise Canceling</h3>
-            <p>Crystal clear sound.</p>
+            <p>Crystal clear sound isolates you from any noise outside.</p>
         </div>
         <div class="feature-card">
             <h3>40 Hours Battery</h3>
-            <p>Long listening sessions.</p>
+            <p>Long continuous listening sessions without any interruption.</p>
         </div>
         <div class="feature-card">
             <h3>Bluetooth 5.3</h3>
-            <p>Fast stable connection.</p>
+            <p>Super fast transmission speeds and highly stable connection.</p>
         </div>
     </section>
 
     <h2 class="section-title" id="specs">Specifications</h2>
     <section class="specs-section">
         <table class="specs-table">
-            <tr><td class="specs-label">Driver</td><td>40mm</td></tr>
-            <tr><td class="specs-label">Battery</td><td>40 Hours</td></tr>
-            <tr><td class="specs-label">Bluetooth</td><td>5.3</td></tr>
-            <tr><td class="specs-label">Charging</td><td>USB-C</td></tr>
-            <tr><td class="specs-label">Weight</td><td>240g</td></tr>
+            <tr><td class="specs-label">Driver</td><td>40mm Dynamic</td></tr>
+            <tr><td class="specs-label">Battery Life</td><td>Up to 40 Hours</td></tr>
+            <tr><td class="specs-label">Bluetooth</td><td>Version 5.3</td></tr>
+            <tr><td class="specs-label">Charging</td><td>Type-C Fast Charge</td></tr>
+            <tr><td class="specs-label">Weight</td><td>240g Light Weight</td></tr>
         </table>
     </section>
 
@@ -495,7 +440,8 @@
             const mainImg = document.getElementById('mainImg');
             const reflectImg = document.getElementById('reflectImg');
 
-            if(mainImg.getAttribute('src') === imagePath) return;
+            // لو داس على نفس الصورة متكررش الأنيميشن
+            if(mainImg.src.includes(imagePath)) return;
 
             container.classList.add('slide-out');
 
@@ -510,7 +456,7 @@
 
                 setTimeout(() => {
                     container.classList.remove('slide-in');
-                }, 40);
+                }, 50);
 
             }, 400); 
         }
