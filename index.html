@@ -133,8 +133,8 @@
         .thumbnails img {
             width: 65px;
             height: 65px;
-            background-color: #ffffff; /* لجعل خاصية الميكس تعمل بشكل مثالي داخل الكارت */
-            mix-blend-mode: multiply; /* تطير الخلفية البيضاء للصورة */
+            background-color: #ffffff; 
+            mix-blend-mode: multiply; 
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             padding: 4px;
@@ -157,11 +157,11 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            height: 480px; /* تثبيت الارتفاع لضمان ثبات الأبعاد أثناء الحركة */
+            height: 480px; 
         }
 
         .image-display-area img {
-         z-index: 10;
+            z-index: 10;
         }
 
         /* حاوية تأثير الانعكاس والأنيميشن */
@@ -170,19 +170,21 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* نعومة حركة خروج ودخول الحاوية بالكامل */
+            /* تم ضبط الترانزيشن هنا ليكون ثابتاً ومستقراً ومطاطياً مسبقاً لمنع وميض الانطفاء */
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease-in-out;
         }
 
         /* الحالات الخاصة بالأنيميشن (الخروج والظهور) */
         .slide-out {
-            transform: translate(100px, 150px) scale(0.6); /* تنزل تحت يمين وتصغر */
+            transform: translate(100px, 150px) scale(0.6); 
             opacity: 0;
+            transition: transform 0.4s ease-in, opacity 0.4s ease-in; /* خروج سريع وناعم */
         }
 
         .slide-in {
-            transform: translate(0, 100px) scale(0.8); /* تبدأ من تحت شوية وصغيرة */
+            transform: translate(0, 100px) scale(0.8); 
             opacity: 0;
-            transition: none; /* الغاء الترانزيشن مؤقتاً للتهيئة */
+            transition: none !important; 
         }
 
         .main-headphone {
@@ -190,7 +192,7 @@
             width: 100%;
             height: 330px;
             object-fit: contain;
-            mix-blend-mode: multiply; /* تطير الخلفية البيضاء للسماعة الكبيرة */
+            mix-blend-mode: multiply; 
             filter: drop-shadow(0 15px 30px rgba(0,0,0,0.7));
         }
 
@@ -219,7 +221,7 @@
             transform: scaleY(-1); 
             opacity: 0.15; 
             filter: blur(2px); 
-            mix-blend-mode: multiply; /* تطير الخلفية البيضاء للانعكاس أيضاً */
+            mix-blend-mode: multiply; 
         }
 
         /* ==================== باقي أقسام الموقع ==================== */
@@ -357,54 +359,52 @@
             margin-top: auto;
         }
 
-            /* تنسيق الروابط لكي تحافظ على اللون الأبيض وبدون خط تحتها */
-a {
-    color: #fff !important; 
-    text-decoration: none !important;
-}
-
-/* كود ضبط الشاشات الصغيرة والموبايل */
-@media (max-width: 768px) {
-    /* يمنع الصور وسماعة الرأس من الخروج بره الشاشة ويجعلها تصغر تلقائياً */
-  /* الكود ده مخصص للصورة الكبيرة فقط عشان تظبط مقاسها */
-  .image-display-area img {
-            max-width: 100% !important;
-            height: auto !important;
-            display: block !important;
-            margin: 0 auto !important;
+        /* تنسيق الروابط لكي تحافظ على اللون الأبيض وبدون خط تحتها */
+        a {
+            color: #fff !important; 
+            text-decoration: none !important;
         }
 
-        /* الكود ده مخصوص للـ 4 صور الصغيرة عشان تنور وتظهر جمب بعض */
-        .thumbnails {
-            display: flex !important;
-            flex-direction: row !important; /* يخليهم جمب بعض مش تحت بعض */
-            justify-content: center !important;
-            align-items: center !important;
-            gap: 30px !important;
-            margin-top: 20px !important;
+        /* كود ضبط الشاشات الصغيرة والموبايل */
+        @media (max-width: 768px) {
+            .image-display-area img {
+                max-width: 100% !important;
+                height: auto !important;
+                display: block !important;
+                margin: 0 auto !important;
+            }
 
-            background-color: #ffffff !important;
-            padding: 8px 16px !important;
-            border-radius: 20px !important;
-            margin:20px auto !important;
-            width: max-content !important;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2) !important;
-        }
+            /* الكود ده مخصوص للـ 4 صور الصغيرة عشان تنور وتظهر جمب بعض */
+            .thumbnails {
+                display: flex !important;
+                flex-direction: row !important; 
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 30px !important;
+                margin-top: 20px !important;
+                background-color: #ffffff !important;
+                padding: 8px 16px !important;
+                border-radius: 20px !important;
+                margin: 20px auto !important;
+                width: max-content !important;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2) !important;
+            }
 
-        .thumbnails img {
-            width: 37px !important; /* حجم مناسب للصور الصغيرة على الموبايل */
-            height: 37px !important;
-            opacity: 1 !important; /* نضمن إنها مش ميتة أو مظلمة */
-            filter: none !important;
-            display: block !important;
-            object-fit: contain !important;
-          }
-        .image-display-area img{
-            max-width: 100% !important;
-            height: auto !important;
-            display: block !important;
-            margin: 0 auto !important;
-        }
+            .thumbnails img {
+                width: 37px !important; 
+                height: 37px !important;
+                opacity: 1 !important; 
+                filter: none !important;
+                display: block !important;
+                object-fit: contain !important;
+            }
+            
+            .image-display-area img {
+                max-width: 100% !important;
+                height: auto !important;
+                display: block !important;
+                margin: 0 auto !important;
+            }
         }
     </style>
 </head>
@@ -430,28 +430,25 @@ a {
             
             <a href="#features" class="shop-now-btn">Shop Now</a>
             
-            <!-- ألوان النيون المضيئة القوية تم تعديلها هنا برمز الهكس القوي المشع -->
             <div class="thumbnails">
-                <img src="Https://raw.githubusercontent.com/abanoukaram/nuvora.github.io/main/headphone1.png" alt="Headphone 1" onclick="animateAndChange('headphone1.png', '#1a0d22')">
+                <img src="headphone1.png" alt="Headphone 1" onclick="animateAndChange('headphone1.png', '#1a0d22')">
                 <img src="headphone2.png" alt="Headphone 2" onclick="animateAndChange('headphone2.png', '#5a0a0a')">
                 <img src="headphone3.png" alt="Headphone 3" onclick="animateAndChange('headphone3.png', '#2d3139')">
                 <img src="headphone4.png" alt="Headphone 4" onclick="animateAndChange('headphone4.png', '#6b114d')">
             </div>
         </div>
 
-        <!-- منطقة عرض السماعة الكبيرة المدعومة بالأنيميشن الشفاف -->
         <div class="image-display-area">
             <div id="glowContainer" class="reflection-container">
                 <div class="reflected-frame">
-                    <img id="mainImg" src="Https://raw.githubusercontent.com/abanoukaram/nuvora.github.io/main/headphone1.png" class="main-headphone" alt="Nuvora Main Display">
+                    <img id="mainImg" src="headphone1.png" class="main-headphone" alt="Nuvora Main Display">
                 </div>
                 <div class="divider-line"></div>
-                <img id="reflectImg" src="Https://raw.githubusercontent.com/abanoukaram/nuvora.github.io/main/headphone1.png" class="reflected-image" alt="Reflection">
+                <img id="reflectImg" src="headphone1.png" class="reflected-image" alt="Reflection">
             </div>
         </div>
     </section>
 
-    <!-- باقي الأقسام كما هي فُل الفُل -->
     <h2 class="section-title" id="features">Features</h2>
     <section class="features-section">
         <div class="feature-card">
@@ -499,43 +496,35 @@ a {
         <p>&copy; 2026 Nuvora. All Rights Reserved.</p>
     </footer>
 
-    <!-- جافا سكريبت المطور بالأنيميشن الجديد وحل مشكلة قوة اللون -->
     <script>
         function animateAndChange(imagePath, neonColor) {
             const container = document.getElementById('glowContainer');
             const mainImg = document.getElementById('mainImg');
             const reflectImg = document.getElementById('reflectImg');
 
-            // لو ضغط على نفس الصورة المفتوحة حالياً لا يفعل شيء لعدم تكرار الأنيميشن
             if(mainImg.getAttribute('src') === imagePath) return;
 
             // 1. تفعيل حركة الاختفاء والنزول تحت يمين
             container.classList.add('slide-out');
 
-            // 2. انتظر حتى ينتهي تأثير الاختفاء (500 مللي ثانية) ثم غير الصورة وهي مخفية
+            // 2. التغيير الفوري أثناء الاختفاء الكامل
             setTimeout(() => {
                 mainImg.src = imagePath;
                 reflectImg.src = imagePath;
                 
-                // تحديث اللون الخلفي فوراً وزيادة توهجه
+                // تحديث نبض النيون في الخلفية
                 document.documentElement.style.setProperty('--neon-color', neonColor);
 
-                // تهيئة الحاوية لتأتي من الأسفل (مخفية ومن أسفل)
+                // تهيئة الحاوية لتصعد من الأسفل
                 container.classList.remove('slide-out');
                 container.classList.add('slide-in');
 
-                // خفض الأوباسيتي والبدء فوراً في الصعود لأعلى برفق
+                // تشغيل أنيميشن الصعود والاستقرار المطاطي فورا بنعومة وثبات
                 setTimeout(() => {
-                    container.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'; /* تأثير مطاطي احترافي عند الاستقرار */
                     container.classList.remove('slide-in');
-                }, 50);
+                }, 40);
 
-            }, 450);
-            
-            // إعادة ضبط الترانزيشن الافتراضي للحاوية بعد انتهاء الدخول
-            setTimeout(() => {
-                container.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-            }, 1100);
+            }, 400); // تسريع وقت النقلة ليكون الاستجابة فورية وممتازة
         }
     </script>
 
